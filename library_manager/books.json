@@ -1,0 +1,72 @@
+[
+    {
+        "Title": "Namal",
+        "Author": "Nimrah Ahmed",
+        "Publication Year": 2012,
+        "Genre": "Romantic Suspense",
+        "Read Status": true
+    },
+    {
+        "Title": "Jannat Kay Pattay",
+        "Author": "Nimrah Ahmed",
+        "Publication Year": 2011,
+        "Genre": "Romance",
+        "Read Status": false
+    },
+    {
+        "Title": "Haalim",
+        "Author": "Nimrah Ahmed",
+        "Publication Year": 2016,
+        "Genre": "Mystery",
+        "Read Status": false
+    },
+    {
+        "Title": "Beli",
+        "Author": "Nimrah Ahmed",
+        "Publication Year": 2015,
+        "Genre": "Social Fiction",
+        "Read Status": false
+    },
+    {
+        "Title": "Mushaf",
+        "Author": "Nimrah Ahmed",
+        "Publication Year": 2011,
+        "Genre": "Islamic Fiction",
+        "Read Status": true
+    },
+    {
+        "Title": "Peer-e-Kamil",
+        "Author": "Umera Ahmed",
+        "Publication Year": 2004,
+        "Genre": "Islamic Fiction",
+        "Read Status": true
+    },
+    {
+        "Title": "Lahasil",
+        "Author": "Umera Ahmed",
+        "Publication Year": 2009,
+        "Genre": "Drama",
+        "Read Status": false
+    },
+    {
+        "Title": "Man-o-Salwa",
+        "Author": "Umera Ahmed",
+        "Publication Year": 2007,
+        "Genre": "Social Fiction",
+        "Read Status": false
+    },
+    {
+        "Title": "Aab-e-Hayat",
+        "Author": "Umera Ahmed",
+        "Publication Year": 2014,
+        "Genre": "Islamic Fiction",
+        "Read Status": false
+    },
+    {
+        "Title": "Shehr-e-Zaat",
+        "Author": "Umera Ahmed",
+        "Publication Year": 2012,
+        "Genre": "Spiritual Fiction",
+        "Read Status": false
+    }
+]
