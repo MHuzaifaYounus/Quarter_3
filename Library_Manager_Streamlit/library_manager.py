@@ -27,10 +27,16 @@ def view_books():
     except Exception as e:
         return []
 
-def mark_as_read(title):
+def mark_as_read(query):
     try:
-        collection.update_one({"title": title}, {"$set": {"status": "Read"}})
-        return True
+        for book in collection.find():
+            if query.lower() in book["title"].lower():
+                collection.update_one({"title": query}, {"$set": {"status": "Read"}})
+                return True
+            elif query.lower() in book["author"].lower():
+                collection.update_one({"author": query}, {"$set": {"status": "Read"}})
+                return True
+        return False
     except Exception as e:
         return False
 
@@ -89,7 +95,17 @@ elif page == "🗑️ Remove a Book":
                     st.success("✅ Book removed successfully")
                 else:
                     st.error("❌ Failed to remove book")
-                # We're only removing the first matching book, so break
+              
+                break
+            elif removing_title.lower() in book["author"].lower():
+                found = True
+                st.write(f"🗑️ Book Removed: {book['title']} - {book['status']}")
+                result = remove_book(book["title"])
+                if result:
+                    st.success("✅ Book removed successfully")
+                else:
+                    st.error("❌ Failed to remove book")
+               
                 break
            
         if not found:
@@ -144,16 +160,31 @@ elif page == "🔍 Search Books":
                     st.success("✅ Book found")
                     break
              
-            
+                elif search_title.lower() in book["author"].lower():
+                    found = True
+                    status_emoji = "✅" if book['status'] == "Read" else "📖"
+                    
+                    st.markdown(f"""
+                    <div style='background-color: #1f77b4; padding: 20px; border-radius: 10px; margin: 10px 0;'>
+                        <h3 style='color: white; margin: 0;'>📕 {book['title']}</h3>
+                        <p style='margin: 10px 0; color: white;'>
+                            <span style='color: #f0f2f6;'>✍️ By:</span> <strong>{book['author']}</strong><br>
+                            <span style='color: #f0f2f6;'>📅 Published:</span> <strong>{book['year']}</strong><br>
+                            <span style='color: #f0f2f6;'>📖 Status:</span> <strong>{book['status']}</strong> {status_emoji}
+                        </p>
+                    </div>
+                    """, unsafe_allow_html=True)
+                    st.success("✅ Book found")
+                    break
             if not found:
                 st.error("❓ Book not found")
     
 elif page == "✅ Mark as Read":
     st.subheader("✅ Mark as Read")
-    title = st.text_input("📝 Title",key="mark_title_input")
+    query = st.text_input("📝 Title",key="mark_title_input")
     if st.button("✅ Mark as Read",key="mark_button"):
         with st.spinner("⏳ Marking as read..."):
-            result = mark_as_read(title)
+            result = mark_as_read(query)
             if result:
                 st.success("✅ Book marked as read")
             else:
@@ -182,7 +213,3 @@ elif page == "📊 Display Statistics":
             
 else:
     st.write("⚠️ Invalid page")
-
-# Removing client.close() as it would close the connection prematurely
-# The connection will be maintained throughout the Streamlit session
-# client.close()
