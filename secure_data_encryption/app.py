@@ -4,15 +4,12 @@ import hashlib
 import time
 import json
 
-
 key = st.secrets["key"]["cipher_key"].encode() 
 cipher = Fernet(key)
 
-with open('stored_data.json', 'r') as file:
-    data = json.load(file)
-
+# Initialize session state for stored data
 if "stored_data" not in st.session_state:
-    st.session_state.stored_data = data
+    st.session_state.stored_data = {}
     
 if "failed_attempts" not in st.session_state:
     st.session_state.failed_attempts = 0
@@ -34,19 +31,13 @@ def decrypt_data(encrypted_text, passkey):
     st.session_state.failed_attempts += 1
     return None
 
-
-
 if "islogin" not in st.session_state:
     st.session_state.islogin = False
 
-
 if st.session_state.islogin == False:
     choice = "Login"
-    
-
 else:
     choice = st.sidebar.radio("Navigation", ["Home", "Store Data", "Retrieve Data"])
-
 
 st.title("Secure Data Encryption")
 if choice == "Home":
@@ -57,7 +48,6 @@ if choice == "Home":
     }
     st.table(display_data)
         
-
 elif choice == "Store Data":
     st.subheader("📂 Store Data Securely")
     title = st.text_input("Enter Title")
@@ -68,12 +58,7 @@ elif choice == "Store Data":
         if title and user_data and passkey:
             encrypted_text = encrypt_data(user_data)
             st.session_state.stored_data[title] = {"encrypted_text": encrypted_text, "passkey":hash_passkey(passkey)}
-
-            with open('stored_data.json', 'w') as f:
-                json.dump(st.session_state.stored_data, f)
-
             st.success("Successfully Stored Data")
-          
         else:
             st.error("Both Fields Are Required")
 
@@ -98,7 +83,6 @@ elif choice == "Retrieve Data":
                     st.rerun()
         else:
             st.error("⚠️ Both fields are required!")
-
 
 elif choice == "Login":
     st.subheader("🔑 Reauthorization Required")
