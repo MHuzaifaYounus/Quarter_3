@@ -7,12 +7,19 @@ import json
 key = st.secrets["key"]["cipher_key"].encode() 
 cipher = Fernet(key)
 
-# Initialize session state for stored data
 if "stored_data" not in st.session_state:
     st.session_state.stored_data = {}
     
 if "failed_attempts" not in st.session_state:
     st.session_state.failed_attempts = 0
+
+if "islogin" not in st.session_state:
+    st.session_state.islogin = False
+
+if st.session_state.islogin == False:
+    choice = "Login"
+else:
+    choice = st.sidebar.radio("Navigation", ["Home", "Store Data", "Retrieve Data"])
 
 def hash_passkey(passkey):
     return hashlib.sha256(passkey.encode()).hexdigest()
@@ -31,13 +38,6 @@ def decrypt_data(encrypted_text, passkey):
     st.session_state.failed_attempts += 1
     return None
 
-if "islogin" not in st.session_state:
-    st.session_state.islogin = False
-
-if st.session_state.islogin == False:
-    choice = "Login"
-else:
-    choice = st.sidebar.radio("Navigation", ["Home", "Store Data", "Retrieve Data"])
 
 st.title("Secure Data Encryption")
 if choice == "Home":
